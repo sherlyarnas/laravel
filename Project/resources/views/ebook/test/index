@@ -1,0 +1,45 @@
+
+@extends('layouts.master')
+
+@section('content')
+	<h1>Yuk Baca Bukumu! </h1>
+			@if(session()->get('success'))
+				<div class="alert alert-success">
+					{{session()->get('success')}}
+				</div>
+			 <br/>
+			@endif
+  <table class="table table-condensed">
+		<tr>
+			<td>Kode Buku</td>
+			<td>Kelas</td>
+			<td>Mata Pelajaran</td>
+			<td>Judul</td>
+			<td>Penerbit</td>
+			<td>Penulis</td>
+			<td >Tahun Terbit</td>
+			<td> Ebook </td>
+			<td colspan="2"><a href="{{ route('ebook.create') }}">Tambah</a></td>
+				@foreach ($EbookTampil as $e)
+				<tr>
+					<td> {{$e->kd_buku}}</td>
+					<td> {{$e->kelas}}</td>
+					<td>{{$e->mapel}}</td>
+					<td> {{$e->judul_buku}}</td>
+					<td> {{$e->penerbit}}</td>
+					<td> {{$e->penulis}}</td>
+					<td> {{$e->tahun_terbit}}</td>
+					<td><a href="/file_ebook/{{$e->file_ebook}}" target="_blank"><img src="/file_ebook/{{$e->file_ebook}}" width="100px" height="100px" alt="Foto"></a></td>
+
+					<td ><a href="{{ route('ebook.edit' ,$e->kd_buku)}}" class="btn btn-success">Edit </a>
+						<form action="{{route ('ebook.destroy' , $e->kd_buku)}}" method="post">
+							@csrf
+							@method ('DELETE')
+							 <a class="btn btn-danger">Delete</a>
+                		</form>
+                	</td>
+				</tr>			
+			@endforeach
+			</tr>
+	</table>
+@endsection
